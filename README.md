@@ -14,3 +14,9 @@ When its completed, type this and hit enter:
 brew install sox
 ```
 Homebrew will install an audio manipulation program called *sox*. 
+
+
+Windows: 
+
+1. Install pkg manager (chocolatey?)
+2. Install [sox](https://sourceforge.net/projects/sox/files/latest/download)
