@@ -20,6 +20,8 @@ const ensureDir = require('ensure-dir')
 const args = require("really-simple-args")();
 const kill  = require('tree-kill');
 var every = require('schedule').every;
+var NodeWebcam = require( "node-webcam" );
+
 
 
 
@@ -29,6 +31,7 @@ var numIntervals;
 var counter = 0;
 var interviews = __dirname + '/interviews'
 var record
+var snapshot
 
 // throw error in startup if not all flags have been set by user
 function missingArg(arg){
@@ -58,16 +61,80 @@ if(args.hasParameter("interval")) {
 }
 
 // get the number of intervals/snapshots
-if(args.hasParameter("numIntervals")) {
-  numIntervals = args.getParameter("numIntervals")
-  console.log('name set to ' + name)
+if(args.hasParameter("snapshots")) {
+  numIntervals = args.getParameter("snapshots")
+  console.log('name set to ' + numIntervals)
 } else{
   numIntervals = 10;
 
   console.log('\nnumber of snapshots/intervals set to default of 10') 
 }
 
-recordingFile = interviews + '/' + name + '/' + Date.now() + '.wav'
+
+//////////////// WEBCAM /////////////
+
+//Default options
+ 
+var opts = {
+ 
+  //Picture related
+
+  width: 1280,
+
+  height: 720,
+
+  quality: 100,
+
+
+  //Delay in seconds to take shot
+  //if the platform supports miliseconds
+  //use a float (0.1)
+  //Currently only on windows
+
+  delay: 0,
+
+
+  //Save shots in memory
+
+  saveShots: true,
+
+
+  // [jpeg, png] support varies
+  // Webcam.OutputTypes
+
+  output: "jpeg",
+
+
+  //Which camera to use
+  //Use Webcam.list() for results
+  //false for default device
+
+  device: false,
+
+
+  // [location, buffer, base64]
+  // Webcam.CallbackReturnTypes
+
+  callbackReturn: "location",
+
+
+  //Logging
+
+  verbose: false
+
+};
+
+var Webcam = NodeWebcam.create( opts );
+ 
+ 
+Webcam.list( function( list ) {
+  console.log(list)
+})
+
+/////////////// Sound recorder ///////////////////////
+
+recordingFile = interviews + '/' + name + '/' + Date.now() + '.mp3'
+snapshot = interviews + '/' + name + '/' + Date.now() + '.jpeg'
 // exec('sox -d ' + interviews + '/' + name + '/')
 
 
@@ -75,12 +142,40 @@ recordingFile = interviews + '/' + name + '/' + Date.now() + '.wav'
 
 record = spawn('sox', ['-d', recordingFile]);
 console.log('started recording ' + recordingFile)
+//Will automatically append location output type
+ 
+Webcam.capture( snapshot, function( err, data ) {
+  console.log('captured snapshot ' + snapshot)
+} );
+ 
+ 
 
 
-setTimeout(function () {
+
+setTimeout(function run() {
   console.log('ended recording ' + recordingFile)
   kill(record.pid);
-  recordingFile = interviews + '/' + name + '/' + Date.now() + '.wav'
+  fileName = Date.now()
+  recordingFile = interviews + '/' + name + '/' + fileName + '.mp3'
   record = spawn('sox', ['-d', recordingFile]);
   console.log('started recording ' + recordingFile)
+  snapshot = interviews + '/' + name + '/' + fileName + '.jpeg'
+
+  Webcam.capture( snapshot, function( err, data ) {
+    console.log('captured snapshot ' + snapshot)
+  } );
+  counter++
+  if(counter >= numIntervals){
+    kill(record.pid);
+    console.log('artstar interview completed. order the coffee table book')
+    process.exit();
+  }
+  setTimeout(run, interval);
 }, interval)
+
+
+
+//Available in nodejs
+ 
+ 
+ 
