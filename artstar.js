@@ -19,11 +19,7 @@ const ensureDir = require('ensure-dir')
 
 const args = require("really-simple-args")();
 const kill  = require('tree-kill');
-var every = require('schedule').every;
 var NodeWebcam = require( "node-webcam" );
-
-
-
 
 var name;
 var interval;
@@ -172,10 +168,6 @@ setTimeout(function run() {
   }
   setTimeout(run, interval);
 }, interval)
-
-
-
-//Available in nodejs
  
  
  
