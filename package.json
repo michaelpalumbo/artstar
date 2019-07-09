@@ -1,0 +1,27 @@
+{
+  "name": "artstar",
+  "version": "0.0.1",
+  "description": "This program will segment an interview into separate audio recordings, and will also take a photo at the moment of the start of each recording. Media files are stored in a user-defined folder, and the files are named with the Unix Time Code (at that moment the # of seconds elapsed since January 1, 1970).",
+  "main": "artstar.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelpalumbo/artstar.git"
+  },
+  "author": "Michael Palumbo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelpalumbo/artstar/issues"
+  },
+  "homepage": "https://github.com/michaelpalumbo/artstar#readme",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "ensure-dir": "^0.1.0",
+    "fs": "0.0.1-security",
+    "node-webcam": "^0.5.0",
+    "really-simple-args": "^1.1.1",
+    "tree-kill": "^1.2.1"
+  }
+}
