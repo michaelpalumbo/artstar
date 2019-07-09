@@ -46,7 +46,7 @@ Windows:
   **Ian** This step might not work -- I couldn't test it on Windows. Unfortunately you need to build the imagesnap program from source. There are instructions at the bottom of the page, so if it doesn't work/you get stuck/don't know where to begin let me know. 
 
 
-## Running the program:
+# Running the artstar interview capture:
 
 ### OSX:
 
@@ -54,10 +54,11 @@ Windows:
 ```shell
 cd
 ```
-Then drag the folder into terminal. The terminal command should now display:
+Then drag the folder directly onto the terminal window and release the mouse button. The terminal command should now display:
 ```shell
 cd /Users/username/path/to/artstar/
 ```
+(or you can type it out by hand)
 hit enter. Now everything we do in terminal will be done from within this folder. 
 
 ### Windows:
@@ -65,9 +66,9 @@ hit enter. Now everything we do in terminal will be done from within this folder
 ```shell
 cd \Full\path\to\your\artstar\folder
 ```
-Hit enter. Note that compared to mac, Windows uses backslashes. 
+Hit enter. Note that compared to mac, Windows uses backslashes. Now everything we do in Command prompt will be done from within this folder. 
 
-## Run the artstar interview program!
+## How to start; options
 
 ```shell
 node artstar.js -name yourname
