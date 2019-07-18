@@ -1,5 +1,6 @@
 recordings/
-i	nterviews/
+interviews/
+interviews/*
 
 .DS_Store
 
