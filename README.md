@@ -42,27 +42,39 @@ Windows:
 2. Install [nodejs](https://treehouse.github.io/installation-guides/windows/node-windows.html)
   - note: in the 'Test It!' section, they refer to something called a 'command line tool', like Powershell or Windows Command Prompt. You should be able to find either of these in your programs folder. 
   - For now, you can ignore their suggestion of "Create a test file and run it" (unless you're comfortable or curious about programming in nodejs)
+3. Install [imagesnap](https://github.com/chuckfairy/node-webcam/tree/master/src/bindings/CommandCam)
+  **Ian** This step might not work -- I couldn't test it on Windows. Unfortunately you need to build the imagesnap program from source. There are instructions at the bottom of the page, so if it doesn't work/you get stuck/don't know where to begin let me know. 
 
 
-## Running the program:
+# Running the artstar interview capture:
 
-OSX:
+### OSX:
 
 1. Locate the artstar folder in Finder. In terminal, type:
 ```shell
 cd
 ```
-Then drag the folder into terminal. The terminal command should now display:
+Then drag the folder directly onto the terminal window and release the mouse button. The terminal command should now display:
 ```shell
 cd /Users/username/path/to/artstar/
 ```
+(or you can type it out by hand)
 hit enter. Now everything we do in terminal will be done from within this folder. 
 
-Run:
+### Windows:
+1. Locate the artstar folder in Finder. In Command Prompt, type:
+```shell
+cd \Full\path\to\your\artstar\folder
+```
+Hit enter. Note that compared to mac, Windows uses backslashes. Now everything we do in Command prompt will be done from within this folder. 
+
+## How to start; options
 
 ```shell
 node artstar.js -name yourname
 ```
+Hit enter. 
+
 *note* your name cannot include spaces or it will throw an error. 
 
 artstar.js will run with a default setting of 1 new photo and 1 new audio recording every 30 second interval, and will run for 10 intervals. To change either of these settings, add these flags to the run command:
