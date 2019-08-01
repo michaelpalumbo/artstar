@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 79.0, 482.0, 933.0 ],
+		"rect" : [ 34.0, 79.0, 1157.0, 933.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -316,7 +316,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 791.0, 967.0, 115.0, 33.0 ],
-					"presentation_linecount" : 2,
 					"style" : "helpfile_label",
 					"text" : "soundfile input for channel 2 (R)"
 				}
@@ -330,7 +329,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 632.5, 967.0, 115.0, 33.0 ],
-					"presentation_linecount" : 2,
 					"style" : "helpfile_label",
 					"text" : "soundfile input for channel 1 (L)"
 				}
@@ -344,7 +342,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 846.5, 907.5, 352.0, 33.0 ],
-					"presentation_linecount" : 2,
 					"style" : "helpfile_label",
 					"text" : "alternatively, the record message will start recording for a fixed amount of time (in milliseconds) and then stop."
 				}
@@ -496,7 +493,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 798.5, 1003.0, 263.042465209960938, 39.0 ]
+					"patching_rect" : [ 798.0, 1003.0, 263.042465209960938, 39.0 ]
 				}
 
 			}
@@ -709,7 +706,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 907.0, 685.0, 304.0, 35.0 ],
-					"text" : "\"Macintosh HD:/Users/mp/artstar/interviews/1563471853355\""
+					"text" : "\"Macintosh HD:/Users/mp/artstar/interviews/1564697259980\""
 				}
 
 			}
@@ -748,8 +745,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 1
 					}
 ,
@@ -843,7 +838,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 2,
-					"outlettype" : [ "clear", "clear" ],
+					"outlettype" : [ "", "" ],
 					"patcher" : 					{
 						"fileversion" : 1,
 						"appversion" : 						{
@@ -1395,8 +1390,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "jit_matrix", "" ],
-					"patching_rect" : [ 48.0, 390.5, 113.0, 23.0 ],
-					"text" : "jit.grab 320 240"
+					"patching_rect" : [ 48.0, 390.5, 187.0, 23.0 ],
+					"text" : "jit.grab 320 240 @engine viddll"
 				}
 
 			}
@@ -2033,7 +2028,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-16", 0 ],
-					"midpoints" : [ 151.5, 417.5, 257.5, 417.5 ],
+					"midpoints" : [ 225.5, 417.5, 257.5, 417.5 ],
 					"source" : [ "obj-95", 1 ]
 				}
 
