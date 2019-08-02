@@ -62,6 +62,25 @@ pip install elasticsearch
 
 ## Running
 
+I wrote two programs. One is a live interpreter, the other interprets recorded audio files. The former is easier to run, so it can serve as a useful test that the installation steps all worked:
+
+### Live speech transcriber
+
+1. 1. We'll run this program from the termninal! First, point the terminal to the artstar directory:
+```shell
+cd /full/path/to/artstar/folder
+``` 
+**hint** you can type *cd*, then drag and drop the icon for the artstar folder into terminal and it should copy the path for you. 
+
+2. run the program:
+```shell
+python liveSpeech.py
+```
+After hitting enter, speak a phrase. Shortly after the program will return what it understood, and then quit. Please let me know if this program didn't work. 
+
+
+### Audio file transcriber
+
 1. We'll run this program from the termninal! First, point the terminal to the artstar directory:
 ```shell
 cd /full/path/to/artstar/folder
