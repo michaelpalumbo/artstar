@@ -4,8 +4,9 @@ Download the [new release here](https://github.com/michaelpalumbo/artstar/releas
 
 ## Requirements
 
-This program is written in Python and for the time being it only works on MacOS (sorry Ian!). This is due to MacOS having a specific speech recognition interpreter... I haven't experimented with a PC-version yet. 
-MacOS comes pre-installed with Python. 
+This program is written in Python. MacOS comes pre-installed with Python. 
+
+### MacOS Req's
 Make sure homebrew is installed. Open a terminal window and type:
 ```shell
 brew -v
@@ -15,16 +16,39 @@ and hit *enter*
 You should get something like 'Homebrew 2.1.9' (don't worry about the exact numbers)
 If not, you need to install homebrew. Go here: [https://brew.sh/](https://brew.sh/)
 
+### Windows Req's:
+Install python3: [https://www.python.org/downloads/release/python-374/](https://www.python.org/downloads/release/python-374/) (releases are lower down on the page)
+
+Once python3 is installed, make sure its up to date
+```shell
+python -m pip install --upgrade pip setuptools wheel
+```
+then, install PocketSphinx (a speech interpreter):
+```shell
+pip install pocketsphinx
+```
+*if 'pip' returns an error, replace it with 'pip3'*
+
+Make sure the Chocolatey package manager is installed (its the equivalent of macOS' homebrew:
+[https://chocolatey.org/](https://chocolatey.org/)
+
 ## Installation
 The rest of these steps require a terminal window. each step may take a while... wait before proceeding to next step
 1. Install portaudio:
+OSX:
 ```shell
 brew install portaudio
 ```
+**Ian:** Portaudio isn't available for Windows, and I haven't found any docs on whether this program needs portaudio to run on windows. Try skipping this step, just let me know if theres any problems. Worst case is I can probably find an alternate library...
 
 2. Install elasticsearch
+OSX:
 ```shell
 brew install elasticsearch
+```
+Windows:
+```shell
+choco install elasticsearch
 ```
 
 3. Install some python libraries. Run these separately (I'm just saving myself having to type multiple steps here)
