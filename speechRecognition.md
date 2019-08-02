@@ -53,7 +53,7 @@ Windows:
 choco install elasticsearch
 ```
 
-3. Install some python libraries. Run these separately (I'm just saving myself having to type multiple steps here)
+3. Install some python libraries. Run each line separately (I'm just saving myself having to type multiple steps here)
 ```shell
 pip install SpeechRecognition
 pip install pyaudio
