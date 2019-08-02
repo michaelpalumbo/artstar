@@ -34,7 +34,8 @@ Make sure the Chocolatey package manager is installed (its the equivalent of mac
 
 ## Installation
 The rest of these steps require a terminal window. each step may take a while... wait before proceeding to next step
-1. Install portaudio:
+1. Install portaudio
+
 OSX:
 ```shell
 brew install portaudio
@@ -42,6 +43,7 @@ brew install portaudio
 **Ian:** Portaudio isn't available for Windows, and I haven't found any docs on whether this program needs portaudio to run on windows. Try skipping this step, just let me know if theres any problems. Worst case is I can probably find an alternate library...
 
 2. Install elasticsearch
+
 OSX:
 ```shell
 brew install elasticsearch
@@ -70,8 +72,7 @@ cd /full/path/to/artstar/folder
 
 3. either [a] copy the file 'test.wave' from /artstar into /interviews, or [b] using an audio program record a short clip of yourself speaking, and save it in /interviews (name it whatever you like, just do NOT include any spaces and the extension MUST be ".wave", NOT '.wav' rename it after if you have to)
 
-4. 
-To transcribe the test.wave, run the program using:
+4. To transcribe the test.wave, run the program using:
 ```shell
 python speech.py interviews/test
 ```
