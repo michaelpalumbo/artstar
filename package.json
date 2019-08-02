@@ -18,6 +18,7 @@
   "homepage": "https://github.com/michaelpalumbo/artstar#readme",
   "dependencies": {
     "child_process": "^1.0.2",
+    "compile-run": "^2.3.1",
     "ensure-dir": "^0.1.0",
     "fs": "0.0.1-security",
     "node-webcam": "^0.5.0",

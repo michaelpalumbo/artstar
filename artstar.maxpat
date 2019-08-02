@@ -779,7 +779,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 907.0, 685.0, 304.0, 35.0 ],
-					"text" : "\"Macintosh HD:/Users/mp/artstar/interviews/1564703389962\""
+					"text" : "\"Macintosh HD:/Users/mp/artstar/interviews/1564762198142\""
 				}
 
 			}
@@ -810,11 +810,12 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-36",
+					"linecount" : 2,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 1282.0, 282.0, 203.0, 22.0 ],
+					"patching_rect" : [ 1282.0, 282.0, 149.0, 35.0 ],
 					"saved_object_attributes" : 					{
 						"autostart" : 0,
 						"defer" : 0,
