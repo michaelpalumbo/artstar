@@ -1,6 +1,6 @@
 This is the speech-to-text program! 
 
-Download the [new release here](link), then return to this page for install/run instructions:
+Download the [new release here](https://github.com/michaelpalumbo/artstar/releases/tag/0.0.6), then return to this page for install/run instructions:
 
 ## Requirements
 
