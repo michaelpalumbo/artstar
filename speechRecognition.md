@@ -62,11 +62,11 @@ pip install elasticsearch
 
 ## Running
 
-I wrote two programs. One is a live interpreter, the other interprets recorded audio files. The former is easier to run, so it can serve as a useful test that the installation steps all worked:
+I wrote two programs. One is a live interpreter, the other interprets recorded audio files and will most-likely be the code I include in the larger program. The former is easier to run, so it can serve as a useful test that the installation steps all worked:
 
 ### Live speech transcriber
 
-1. 1. We'll run this program from the termninal! First, point the terminal to the artstar directory:
+1. 1. We'll run this program from the terminal! First, point the terminal to the artstar directory:
 ```shell
 cd /full/path/to/artstar/folder
 ``` 
@@ -81,7 +81,7 @@ After hitting enter, speak a phrase. Shortly after the program will return what 
 
 ### Audio file transcriber
 
-1. We'll run this program from the termninal! First, point the terminal to the artstar directory:
+1. We'll run this program from the terminal! First, point the terminal to the artstar directory:
 ```shell
 cd /full/path/to/artstar/folder
 ``` 
