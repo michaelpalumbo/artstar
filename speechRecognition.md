@@ -40,7 +40,7 @@ OSX:
 ```shell
 brew install portaudio
 ```
-**Ian:** Portaudio isn't available for Windows, and I haven't found any docs on whether this program needs portaudio to run on windows. Try skipping this step, just let me know if theres any problems. Worst case is I can probably find an alternate library...
+**Ian:** Portaudio isn't available for Windows, and I haven't found any docs on whether this program needs portaudio to run on windows. Try skipping this step, just let me know if theres any problems. At worst, I might have to find an alternate library...
 
 2. Install elasticsearch
 
