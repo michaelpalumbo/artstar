@@ -8,7 +8,7 @@ const ensureDir = require('ensure-dir')
 // a dir for each participant
 ensureDir(__dirname + '/interviews').then(() => {
 })
-
+	
 
 const interviewsFolder = __dirname + '/interviews'
 
@@ -16,11 +16,22 @@ const interviewsFolder = __dirname + '/interviews'
 // This will be printed directly to the Max console
 
 // Use the 'addHandler' function to register a function for a particular message
-Max.addHandler("utc", () => {
+Max.addHandler("utc", () => {	
 	Max.outlet('utc', Date.now())
 	Max.outlet('path', __dirname);
 
 });
+
+
+
+
+
+
+
+
+
+
+
 
  /*
 // eventually figure out how to run the speech.py from this node script
