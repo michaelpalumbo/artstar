@@ -20,22 +20,25 @@ void setup() {
   // might be able to reduce the frameRate in order to optimize for multiple cameras and on RPi. 
   frameRate(15);
   oscP5 = new OscP5(this, 12000);   //listening
-  myRemoteLocation = new NetAddress("127.0.0.1", 57120);  //  this sends to max patch
+  myRemoteLocation = new NetAddress("192.168.0.150", 57120);  //  this sends to max patch
   
     // The method plug take 3 arguments. Wait for the <keyword>
   oscP5.plug(this, "varName", "keyword");
   size(480, 270);
   
   //fake = new Capture(this,640,480); 
-  
+        OscMessage newMessage = new OscMessage("/system");  
+      newMessage.add("started"); 
+      oscP5.send(newMessage, myRemoteLocation);
   String Webcam1 = "HD Pro Webcam C920";
-  String Webcam2 = "FaceTime HD Camera";
+ //String Webcam1 = "FaceTime HD Camera";
   portrait_AB = new Capture(this, 480/2, 270/2, Webcam1);
   //portrait_CD = new Capture(this, 480/2, 270/2, Webcam1);
   opencv = new OpenCV(this, 480/2, 270/2);
-  opencv.loadCascade(OpenCV.CASCADE_PROFILEFACE);  
+  opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);  
 
   portrait_AB.start();
+
 }
 
 void draw() {

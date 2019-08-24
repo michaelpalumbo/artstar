@@ -4,10 +4,13 @@ import sys
 audioFile = sys.argv[1] + '.wave'
 text = open(sys.argv[1] + '.txt',"w+")
 
+print(audioFile)
+print(text)
 print('analyzing ' + audioFile)
 # obtain path to "english.wav" in the same folder as this script
 from os import path
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), audioFile)
+# AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), audioFile)
+AUDIO_FILE = audioFile
 
 # use the audio file as the audio source
 r = sr.Recognizer()

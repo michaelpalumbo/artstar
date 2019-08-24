@@ -1,50 +1,73 @@
 const path = require('path');
-const Max = require('max-api');
-const { exec, execSync, spawn } = require('child_process')
+const dateTime = require('date-time');
+const chokidar = require('chokidar');
+const fs = require('fs-extra')
+const cpFile = require('cp-file');
+const printJS = require('print-js')
+
+const exec = require('exec')
+const max = require('max-api');
+
 const speechRecognition = __dirname + '/speech.py'
 const {c, cpp, node, python, java} = require('compile-run');
 const ensureDir = require('ensure-dir')
-// make sure an interviews folder exists. eventually use this to create
-// a dir for each participant
-ensureDir(__dirname + '/interviews').then(() => {
-})
+
+// participant counter (for uniqueness)
+let counter = 1
+// unique ID
+let id;
+
+
+// interviewee name
+let subject;
+//let subject;
+max.addHandler('newSubject', (name) =>{
+	subject = name
+	counter++
+	id = counter + '_'
+	newPath = __dirname + '/interviews/' + id + name
+	// a dir for each participant
+	ensureDir(__dirname + '/interviews/' + id + name).then(() => {
+	})
+	max.post('creating portraits within directory ' + __dirname + '/interviews/' + id + name)
+	max.outlet('path', newPath);
+
 	
+	
+})
 
-const interviewsFolder = __dirname + '/interviews'
+// capture portrait and audio file
+max.addHandler('capture', (name) =>{
+	id = counter + '_'
+	timestamp = Date.now()
+	max.outlet('timestamp', timestamp)
+	max.outlet('capture', id + name + '/' + timestamp)
+})
 
+// run speech2text on 
+max.addHandler('chosen', (filename)=>{
+	// filename = filename.toString()
+	let target = filename.split(".png")[0]
+	targetID = target.lastIndexOf('/')
+	let srcLoc = __dirname + '/interviews/' + subject
+	printJS(filename)
+	/* this isn't working :(
+	exec('python speech.py ' + targetID, {cwd: srcLoc}, (stdout,stderr,err )=>{
+		max.post(stdout,stderr,err)
+	})
 
-// This will be printed directly to the Max console
-
-// Use the 'addHandler' function to register a function for a particular message
-Max.addHandler("utc", () => {	
-	Max.outlet('utc', Date.now())
-	Max.outlet('path', __dirname);
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
- /*
-// eventually figure out how to run the speech.py from this node script
-Max.addHandler("speech", (filename) => {
-	Max.post(filename)
-	file = __dirname + '/interviews/' + filename
-	// exec('python speech.py interviews/' + filename, (stdout,stderr,err)=>{
-	// 	Max.post(stderr,err,stdout)
-	// })
 	python.runFile(speechRecognition,{
-		executionPath: 'python',
-		stdin: filename
-},(err,result)=>console.log(err ? err : result));
+	executionPath: 'python',
+	stdin: filename
+	},(err,result)=>console.log(err ? err : result));
 
-});
-*/
+	*/
+})
+
+
+
+// make sure an interviews folder exists. eventually use this to create
+
+
+
+
