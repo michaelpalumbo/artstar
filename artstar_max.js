@@ -4,7 +4,7 @@ const chokidar = require('chokidar');
 const fs = require('fs-extra')
 const cpFile = require('cp-file');
 const printJS = require('print-js')
-
+const python = require('python')
 const exec = require('exec')
 const max = require('max-api');
 
@@ -50,7 +50,8 @@ max.addHandler('chosen', (filename)=>{
 	let target = filename.split(".png")[0]
 	targetID = target.lastIndexOf('/')
 	let srcLoc = __dirname + '/interviews/' + subject
-	printJS(filename)
+
+	exec('lpr ' + filename)
 	/* this isn't working :(
 	exec('python speech.py ' + targetID, {cwd: srcLoc}, (stdout,stderr,err )=>{
 		max.post(stdout,stderr,err)
