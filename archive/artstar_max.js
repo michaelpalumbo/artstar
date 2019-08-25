@@ -52,8 +52,6 @@ max.addHandler('capture', (name) =>{
 	max.outlet('capture', id + name + '/' + timestamp)
 })
 
-// TODO:
-// copy the chosen .wave into the main folder. run speech.py on it.  
 // run speech2text on 
 max.addHandler('chosen', (filename)=>{
 	// filename = filename.toString()

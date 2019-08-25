@@ -7,3 +7,7 @@ interviews/*
 opencv4nodejs/
 apps
 ignore/
+*.txt
+*.wave
+*.wav
+*.png

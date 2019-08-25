@@ -3,22 +3,24 @@ const dateTime = require('date-time');
 const chokidar = require('chokidar');
 const fs = require('fs-extra')
 const cpFile = require('cp-file');
-
+const ensureDir = require('ensure-dir')
 const exec = require('child_process')
 const max = require('max-api');
 const open = require('open');
+let {PythonShell} = require('python-shell')
 
 
 
-var lp = require("node-lp");
-var options = {};
+
+// var lp = require("node-lp");
+// var options = {};
  
-printer = lp(options);
+// printer = lp(options);
 
 
 const speechRecognition = __dirname + '/speech.py'
 const {c, cpp, node, python, java} = require('compile-run');
-const ensureDir = require('ensure-dir')
+
 
 // participant counter (for uniqueness)
 let counter = 1
@@ -30,15 +32,15 @@ let id;
 let subject;
 //let subject;
 max.addHandler('newSubject', (name) =>{
-	subject = name
+	//subject = name
 	counter++
-	id = counter + '_'
-	newPath = __dirname + '/interviews/' + id + name
-	// a dir for each participant
-	ensureDir(__dirname + '/interviews/' + id + name).then(() => {
-	})
-	max.post('creating portraits within directory ' + __dirname + '/interviews/' + id + name)
-	max.outlet('path', newPath);
+	id = counter + '_' 
+	// newPath = __dirname + '/interviews/' + id + name
+	// // a dir for each participant
+	// ensureDir(__dirname + '/interviews/' + id + name).then(() => {
+	// })
+	// max.post('creating portraits within directory ' + __dirname + '/interviews/' + id + name)
+	//max.outlet('path', newPath);
 
 	
 	
@@ -46,10 +48,10 @@ max.addHandler('newSubject', (name) =>{
 
 // capture portrait and audio file
 max.addHandler('capture', (name) =>{
-	id = counter + '_'
+	//id = counter + '_'
 	timestamp = Date.now()
 	max.outlet('timestamp', timestamp)
-	max.outlet('capture', id + name + '/' + timestamp)
+	max.outlet('capture', name + '_' + timestamp)
 })
 
 // TODO:
@@ -58,14 +60,28 @@ max.addHandler('capture', (name) =>{
 max.addHandler('chosen', (filename)=>{
 	// filename = filename.toString()
 	max.post(filename)
+	// f = filename.lastIndexOf('/');
+	//max.post(f)
+	// t = filename.substring(f + 1);
 
-	cmd = ('lpr \"' + filename + '\"').toString()
-	let target = filename.split(".png")[0]
-	targetID = target.lastIndexOf('/')
-	let srcLoc = __dirname + '/interviews/' + subject
-	// exec(cmd, (stdout,stderr,err)=>{
+	var str = filename;
+var n = str.lastIndexOf('/');
+var result = str.substring(n + 1);
+
+target = result.split(".png")[0]
+speech2text(target)
+
+
+//	cmd = ('lpr ./' + filename + '.png').toString()
+	// let srcLoc = __dirname + '/interviews/' + subject
+	// exec('python speech.py ./' + targetID + '.wave', (stdout,stderr,err)=>{
 	// 	max.post(stderr,err,stdout)
 	// })
+
+	// python.runFile(speechRecognition,{
+	// 	executionPath: '/usr/bin/env/python3',
+	// 	stdin: targetID
+	// 	},(err,result)=>max.post(err ? err : result));
 
 	// const print = spawn('lp', ['lp', '-o', 'landscape', '-o', 'fit-to-page', '-o' ,'media=A4', filename]);
 
@@ -92,14 +108,30 @@ max.addHandler('chosen', (filename)=>{
 		max.post(stdout,stderr,err)
 	})
 
-	python.runFile(speechRecognition,{
-	executionPath: 'python',
-	stdin: filename
-	},(err,result)=>console.log(err ? err : result));
+
 
 	*/
 })
 
+
+function speech2text(fileID){
+max.post('fileID', fileID)
+	let options = {
+		mode: 'text',
+		pythonPath: '/Users/mp/miniconda3/bin/python',
+		pythonOptions: ['-u'], // get print results in real-time
+		scriptPath: __dirname,
+		args: [fileID]
+	};
+	 
+	PythonShell.run('speech.py', options, function (err, results) {
+		if (err) max.post( err);
+		// results is an array consisting of messages collected during execution
+		max.post('results: %j', results);
+	});
+
+
+}
 
 
 // make sure an interviews folder exists. eventually use this to create

@@ -39,6 +39,41 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-5",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "bang" ],
+					"patching_rect" : [ 575.0, 118.0, 113.0, 22.0 ],
+					"text" : "metro 50 @active 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-17",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 575.0, 266.0, 32.0, 22.0 ],
+					"text" : "print"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-20",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 2,
+					"outlettype" : [ "", "" ],
+					"patching_rect" : [ 575.0, 201.0, 89.0, 22.0 ],
+					"text" : "ws @port 8080"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"fontsize" : 24.0,
 					"id" : "obj-35",
 					"maxclass" : "comment",
@@ -1309,7 +1344,7 @@
 					"patching_rect" : [ 828.5, 533.0, 84.0, 33.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 87.5, 60.0, 142.0, 20.0 ],
-					"text" : "192.168.0.150:8086"
+					"text" : "192.168.4.184:8086"
 				}
 
 			}
@@ -1458,8 +1493,6 @@
 					"saved_object_attributes" : 					{
 						"autostart" : 1,
 						"defer" : 0,
-						"node_bin_path" : "",
-						"npm_bin_path" : "",
 						"watch" : 1
 					}
 ,
@@ -1604,9 +1637,9 @@
 					"maxclass" : "mira.frame",
 					"numinlets" : 0,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1074.0, 815.0, 381.264475589912763, 271.055206298828125 ],
+					"patching_rect" : [ 1074.0, 815.0, 381.26446533203125, 271.055199006115686 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 539.0, 17.0, 440.576161490687809, 313.22210693359375 ],
+					"presentation_rect" : [ 539.0, 17.0, 440.576171875, 313.222114316190527 ],
 					"tabname" : "Leaderboard",
 					"taborder" : 2
 				}
@@ -1754,6 +1787,22 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-17", 0 ],
+					"order" : 0,
+					"source" : [ "obj-20", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-8", 0 ],
+					"order" : 1,
+					"source" : [ "obj-20", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-23", 0 ],
 					"source" : [ "obj-22", 0 ]
 				}
@@ -1868,6 +1917,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-20", 0 ],
+					"source" : [ "obj-5", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-47", 0 ],
 					"midpoints" : [ 145.0, 423.5, 126.5, 423.5 ],
 					"source" : [ "obj-51", 0 ]
@@ -1949,13 +2005,6 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "webapp_frames.jpg",
-				"bootpath" : "~/artstar",
-				"patcherrelativepath" : ".",
-				"type" : "JPEG",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "leaderboard.js",
 				"bootpath" : "~/artstar",
 				"patcherrelativepath" : ".",
@@ -1964,6 +2013,10 @@
 			}
 , 			{
 				"name" : "mira.status.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "ws.mxo",
 				"type" : "iLaX"
 			}
  ],

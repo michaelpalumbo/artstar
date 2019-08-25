@@ -27,8 +27,11 @@
     "fs-copy": "^1.0.0",
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.15",
+    "node-lp": "^1.0.1",
     "node-webcam": "^0.5.0",
+    "open": "^6.4.0",
     "print-js": "^1.0.61",
+    "python-shell": "^1.0.8",
     "really-simple-args": "^1.1.1",
     "tree-kill": "^1.2.1"
   }
