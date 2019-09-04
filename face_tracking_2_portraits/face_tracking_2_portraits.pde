@@ -20,7 +20,7 @@ void setup() {
   // might be able to reduce the frameRate in order to optimize for multiple cameras and on RPi. 
   frameRate(15);
   oscP5 = new OscP5(this, 12000);   //listening
-  myRemoteLocation = new NetAddress("192.168.0.150", 57120);  //  this sends to max patch
+  myRemoteLocation = new NetAddress("localhost", 57120);  //  this sends to max patch
   
     // The method plug take 3 arguments. Wait for the <keyword>
   oscP5.plug(this, "varName", "keyword");
