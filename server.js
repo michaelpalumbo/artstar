@@ -81,6 +81,4 @@ wss.on('connection', function connection(ws) {
   // ws.send('something');
 });
 
-setTimeout(function(){ 
-  
- }, 50);
+

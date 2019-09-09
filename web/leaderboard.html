@@ -7,12 +7,28 @@
 
   </head>
 <body>
-  <table>
-    <tr id="1"><td>Artist1, Portrait, Score: </td></tr>
-    <tr id="2"><td>Artist2, Portrait, Score: </td></tr>
-    <tr id="3"><td>Artist3, Portrait, Score: </td></tr>
-    <tr id="4"><td>Artist4, Portrait, Score: </td></tr>
-    <tr id="5"><td>Artist5, Portrait, Score: </td></tr>
+  <!-- TODO: ADD 3 <th> for the artistNN, the portrait, and the score, and   -->
+    <table>
+        <tr>
+            <th>
+                ArtistID
+              </th>
+              <th>
+                Portrait
+              </th>
+              <th>
+                Score
+              </th>
+        </tr>
+    </table>
+  <table id='leaderboard'>
+
+
+    <tr id="1"><td>Artist1</td><td>Portrait</td><td>345</td></tr>
+    <tr id="2"><td>Artist2</td><td>Portrait</td><td>3</td></tr>
+    <tr id="3"><td>Artist3</td><td>Portrait</td><td>32</td></tr>
+    <tr id="4"><td>Artist4</td><td>Portrait</td><td>566</td></tr>
+    <tr id="5"><td>Artist5</td><td>Portrait</td><td>10</td></tr>
   </table>
 </body>
   <script>
@@ -45,7 +61,7 @@ const ws = new ReconnectingWebSocket('ws://localhost:8082');
     // websocket is closed.
     //alert("Connection is closed..."); 
   };
-  var $table = $('table'); 
+  var $table = $('#leaderboard'); 
   function updateLeaderboard(evenOdd){
     let order;
 
@@ -58,7 +74,13 @@ const ws = new ReconnectingWebSocket('ws://localhost:8082');
        console.log(evenOdd, order)
     
     for (var i = order.length; --i >= 0; ) {
-        $table.prepend($table.find('#' + order[i]));
+      console.log(i)
+      // if(i=0){
+      //   //ignore
+      // } else {
+        $table.prepend($table.find('#' + order[i + 1]));
+
+      // }
     }
   }
   let evenOdd = 0
