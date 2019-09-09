@@ -4,7 +4,8 @@
   "description": "This program will segment an interview into separate audio recordings, and will also take a photo at the moment of the start of each recording. Media files are stored in a user-defined folder, and the files are named with the Unix Time Code (at that moment the # of seconds elapsed since January 1, 1970).",
   "main": "artstar.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --ignore ./artstarDatabase server.js"
   },
   "repository": {
     "type": "git",
@@ -23,16 +24,25 @@
     "cp-file": "^7.0.0",
     "date-time": "^3.1.0",
     "ensure-dir": "^0.1.0",
+    "express": "^4.17.1",
     "fs": "0.0.1-security",
     "fs-copy": "^1.0.0",
     "fs-extra": "^8.1.0",
+    "http": "0.0.0",
+    "imgconversion": "^1.0.7",
+    "jimp": "^0.8.0",
     "lodash": "^4.17.15",
     "node-lp": "^1.0.1",
     "node-webcam": "^0.5.0",
     "open": "^6.4.0",
+    "os": "^0.1.1",
+    "png-to-json": "^1.0.6",
     "print-js": "^1.0.61",
     "python-shell": "^1.0.8",
     "really-simple-args": "^1.1.1",
-    "tree-kill": "^1.2.1"
+    "reconnecting-websocket": "^4.2.0",
+    "tree-kill": "^1.2.1",
+    "websocket": "^1.0.29",
+    "ws": "^7.1.2"
   }
 }

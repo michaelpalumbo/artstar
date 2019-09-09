@@ -1,0 +1,79 @@
+<html>
+  <head>
+    
+    <link rel="shortcut icon"><!-- fix the 'cannot find 'favicon.ico' error -->
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="reconnecting-websocket.js"></script>
+
+  </head>
+<body>
+  <table>
+    <tr id="1"><td>Artist1, Portrait, Score: </td></tr>
+    <tr id="2"><td>Artist2, Portrait, Score: </td></tr>
+    <tr id="3"><td>Artist3, Portrait, Score: </td></tr>
+    <tr id="4"><td>Artist4, Portrait, Score: </td></tr>
+    <tr id="5"><td>Artist5, Portrait, Score: </td></tr>
+  </table>
+</body>
+  <script>
+
+const ws = new ReconnectingWebSocket('ws://localhost:8082');
+
+// var ws = new WebSocket('ws://localhost:8082');
+
+
+  ws.onopen = function() {        
+    // Web Socket is connected, send data using send()
+    ws.send(JSON.stringify({
+      cmd: 'newLeaderboard'
+    }));
+    //alert("Message is sent...");
+    };
+
+  ws.onmessage = function (message) { 
+    // order.length = 0
+    // var msg = JSON.parse(message);
+    newData = message.data;
+    console.log(newData)
+    // for(i = 0; newData.length < i; i++){
+    //   order.push(newData[i])
+    // }
+    updateLeaderboard(newData)
+  };
+
+  ws.onclose = function() { 
+    // websocket is closed.
+    //alert("Connection is closed..."); 
+  };
+  var $table = $('table'); 
+  function updateLeaderboard(evenOdd){
+    let order;
+
+    // we're just going to spoof two different leaderboard orders
+    if (evenOdd === 0){
+      order = ['3', '4', '2', '1', '5']
+    } else {
+      order = ['1', '3', '5', '2', '4']
+    }
+       console.log(evenOdd, order)
+    
+    for (var i = order.length; --i >= 0; ) {
+        $table.prepend($table.find('#' + order[i]));
+    }
+  }
+  let evenOdd = 0
+  function isOdd(num) { return num % 2;}
+
+  let spoof = setInterval(() => {
+    evenOdd++
+    updateLeaderboard(isOdd(evenOdd))
+    // evenOdd++
+  }, 1000);
+
+
+
+  </script>
+
+</html>
+
+

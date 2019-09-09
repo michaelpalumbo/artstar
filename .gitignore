@@ -11,3 +11,4 @@ ignore/
 *.wave
 *.wav
 *.png
+node_modules
