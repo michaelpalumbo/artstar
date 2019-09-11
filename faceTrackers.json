@@ -1,0 +1,10 @@
+{
+    "dc:a6:32:08:05:c3": {
+        "frame": 1,
+        "type": "raspberryPi_4+",
+        "score": 0,
+        "active": "ON",
+        "network": true,
+        "ip": "192.168.0.113"
+    }
+}

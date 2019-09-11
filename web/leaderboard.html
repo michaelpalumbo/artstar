@@ -50,11 +50,20 @@ const ws = new ReconnectingWebSocket('ws://localhost:8082');
     // order.length = 0
     // var msg = JSON.parse(message);
     newData = message.data;
-    console.log(newData)
+    d = JSON.parse(newData)
+    console.log(d.cmd)
+    switch(d.cmd){
+
+      case 'leaderBoardUpdate':
+      
+      console.log(d.data)
+      updateLeaderboard(d.data)
+      break;
+    }
     // for(i = 0; newData.length < i; i++){
     //   order.push(newData[i])
     // }
-    updateLeaderboard(newData)
+    
   };
 
   ws.onclose = function() { 
@@ -62,35 +71,51 @@ const ws = new ReconnectingWebSocket('ws://localhost:8082');
     //alert("Connection is closed..."); 
   };
   var $table = $('#leaderboard'); 
-  function updateLeaderboard(evenOdd){
-    let order;
+  function updateLeaderboard(newData){
+    // let order;
+    $("#leaderboard").empty();
 
-    // we're just going to spoof two different leaderboard orders
-    if (evenOdd === 0){
-      order = ['3', '4', '2', '1', '5']
-    } else {
-      order = ['1', '3', '5', '2', '4']
+    function drawTable(newData) {
+      for (var i = 0; i < newData.length; i++) {
+        drawRow(newData[i]);
+        console.log('works', i, newData, newData[i])
+      }
     }
-       console.log(evenOdd, order)
+
+    function drawRow(rowData) {
+        var row = $("<tr />")
+        $("#leaderboard").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
+        row.append($("<td>" + rowData.portraitTracker + "</td>"));
+        row.append($("<td>" + rowData.score + "</td>"));
+        row.append($("<td>" + 'picture.jpeg' + "</td>"));
+    }
+
+    // // we're just going to spoof two different leaderboard orders
+    // if (evenOdd === 0){
+    //   order = ['3', '4', '2', '1', '5']
+    // } else {
+    //   order = ['1', '3', '5', '2', '4']
+    // }
+    //    console.log(evenOdd, order)
     
-    for (var i = order.length; --i >= 0; ) {
-      console.log(i)
-      // if(i=0){
-      //   //ignore
-      // } else {
-        $table.prepend($table.find('#' + order[i + 1]));
+    // for (var i = order.length; --i >= 0; ) {
+    //   console.log(i)
+    //   // if(i=0){
+    //   //   //ignore
+    //   // } else {
+    //     $table.prepend($table.find('#' + order[i + 1]));
 
-      // }
-    }
+    //   // }
+    // }
   }
-  let evenOdd = 0
-  function isOdd(num) { return num % 2;}
+  // let evenOdd = 0
+  // function isOdd(num) { return num % 2;}
 
-  let spoof = setInterval(() => {
-    evenOdd++
-    updateLeaderboard(isOdd(evenOdd))
-    // evenOdd++
-  }, 1000);
+  // let spoof = setInterval(() => {
+  //   evenOdd++
+  //   updateLeaderboard(isOdd(evenOdd))
+  //   // evenOdd++
+  // }, 1000);
 
 
 

@@ -12,3 +12,10 @@ ignore/
 *.wav
 *.png
 node_modules
+
+faceTrackers.json
+rethinkdb_data/
+ssh.js
+stability.js
+trackerLookup.json
+db.js
