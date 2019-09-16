@@ -8,7 +8,8 @@ const wss = new WebSocket.Server({ port: 8082 });
 let artstarDB = new Object();
 const artstarDB_version = Date.now();
 const max = require('max-api');
-var reboot = require('ssh2').Client;
+var ssh = require('ssh2').Client;
+var cron = require('node-cron');
 
 
 // let leaderboard = ['2', '5', '3', '1', '4']
@@ -88,10 +89,11 @@ wss.on('connection', function connection(ws) {
       case 'newFaceTracker':
         max.post('a faceTracker client has connected', msg.id)
         faceTrackers[msg.id] = {}
-        max.post(faceTrackers)
+        updateStability();
           // something's wrong with how the client is parsing the learderboard array... 
           // ws.send(JSON.stringify(leaderboard))
       break;
+
 
       // NOTE: I couldn't figure out how to implement client-side websockets nor JSON string encoding in the python version of the facetracking code, so now the facetrackers will send via open sound control.  
       // case 'faceTrackerUpdate':
@@ -158,24 +160,27 @@ wss.clients.forEach(function each(client) {
 
 // Max.outlet('leaderboard', leaderboard) // ['alpha', 'beta'] 
 
+// after all is updated, make sure the stability monitoring is updated
+updateStability();
 };
 
 max.addHandler('frameStatus', (frameStatus) =>{
   let f = frameStatus.split('_')[0]
   let status = frameStatus.split('_')[1]
-  let macAddress = trackerLookup[f]
+  let serial = trackerLookup[f]
 
-  if(macAddress === undefined){
+  if(serial === undefined){
     // this machine hasn't been added to the faceTrackers.json yet
   } else {
 
-    //max.post(f, status, macAddress)
-    faceTrackers[macAddress].active = status
+    //max.post(f, status, serial)
+    faceTrackers[serial].wall_status = status
     if (status === 'OFF') {
       leaderBoard(f, 'remove')
-      faceTrackers[macAddress].score = 0
+      faceTrackers[serial].score = 0
     }
-    
+    updateStability();
+
   }
 
 })
@@ -190,11 +195,11 @@ max.addHandler('faceTrackerUpdate', (msg)=>{
   } else {
     // let tracker = src.replace('/', '').toString()
     // max.post(tracker)
-    // max.post('incoming', src, point)
+    max.post('incoming', src, point)
     //max.post('frame', src, faceTrackers[src])
     
     let frame = faceTrackers[src].frame
-    if (faceTrackers[src].active === "OFF"){
+    if (faceTrackers[src].wall_status === "OFF"){
       // if set to FF, it means that a portrait is currently being replaced in this frame
       // max.post('face detected in frame ' + frame + '' )
     } else {
@@ -202,7 +207,7 @@ max.addHandler('faceTrackerUpdate', (msg)=>{
       //max.post(oldScore)
       let newScore = oldScore + point
       faceTrackers[src].score = newScore
-      
+      updateStability();
       //max.post(faceTrackers)
         
       // max.post()
@@ -225,20 +230,47 @@ max.addHandler('faceTrackerUpdate', (msg)=>{
 
 // Facetracker STABILITY Section:
 
+// the jit.cellblocks in the presentation view contain status and diagnostics of all connected machines. keep these cellblocks up to date:
+function updateStability(){
+
+
+  max.outlet('networkStatus', faceTrackers)
+
+  fs.writeFileSync('./faceTrackers.json', JSON.stringify(faceTrackers, null, 4))
+}
+
+// check if RPis still running tracker.service
+cron.schedule('*/30 * * * * *', () => {
+  checkTrackerService()
+
+});
+
+
 max.addHandler('trackerReg', (msg)=>{
-  mac = msg.split('_')[0]
+  serial = msg.split('_')[0]
   hostname = msg.split('_')[1]
   ip = msg.split('_')[2].split(' ')[0]
-  max.post(mac, ip)
-  faceTrackers[mac].ip = ip
-  fs.writeFileSync('./faceTrackers.json', JSON.stringify(faceTrackers, null, 4))
-  max.post('updated the faceTrackers.json')
+  max.post(serial, ip)
+  faceTrackers[serial].ip = ip
+
+  updateStability();
+
 })
 
+max.addHandler('cpuTemp', (msg)=>{
+  temp = msg.split('_')[1].split('=')[1].split('>')[0]
+  thisSerial = msg.split('_')[0]
+  max.post(temp)
+
+  max.post(thisSerial, temp)
+  faceTrackers[thisSerial].cpuTemp = temp
+  
+  updateStability();
+})
 max.addHandler('rebootPi', (frame) =>{
 
   ip = faceTrackers[trackerLookup[frame]].ip
-  var conn = new reboot();
+  var conn = new ssh();
   conn.on('ready', function() {
     max.post('Client :: ready');
     conn.shell(function(err, stream) {
@@ -257,12 +289,13 @@ max.addHandler('rebootPi', (frame) =>{
     username: 'pi',
     password: 'raspberry'
   });
+  updateStability();
 })
 
 max.addHandler('shutDownPi', (frame) =>{
 
   ip = faceTrackers[trackerLookup[frame]].ip
-  var conn = new reboot();
+  var conn = new ssh();
   conn.on('ready', function() {
     max.post('Client :: ready');
     conn.shell(function(err, stream) {
@@ -281,7 +314,42 @@ max.addHandler('shutDownPi', (frame) =>{
     username: 'pi',
     password: 'raspberry'
   });
+  updateStability();
 })
+
+var type = require('type-of')
+
+
+max.addHandler('CLI', (frame, msg) =>{
+
+  ip = faceTrackers[trackerLookup[frame]].ip
+  var conn = new ssh();
+  conn.on('ready', function() {
+    max.post('Client :: ready');
+    conn.shell(function(err, stream) {
+      if (err) throw err;
+      stream.on('close', function() {
+        max.post('Stream :: close');
+        conn.end();
+      }).on('data', function(data) {
+        max.post(data);
+      });
+      stream.end('sudo ' + msg + '\n');
+    });
+  }).connect({
+    host: ip,
+    // port: 22,
+    username: 'pi',
+    password: 'raspberry'
+  });
+  updateStability();
+})
+
+
+
+
+
+
 const { spawn } = require('child_process')
 
 function updateNetworkStatus(index, pingUp){
@@ -292,6 +360,7 @@ function updateNetworkStatus(index, pingUp){
     max.post('Tracker ' + index + ' network status changed to ' + faceTrackers[trackerLookup[index]].network)
 
   }
+  updateStability();
 }
 
 // Duplicate this section for each tracker!
@@ -301,9 +370,91 @@ tracker_1.stdout.on('data', (data) => {
   d = data.toString('utf8').split(' ')
   pingUp = !(d.includes('timeout'))
   updateNetworkStatus(1, pingUp)
+  updateStability();
 });
 
 tracker_1.stderr.on('data', (data) => {
   max.post(`tracker_1 ping error ${data}`);
 });
 
+
+
+// systemctl show -p ActiveState tracker.service
+var StringDecoder = require('string_decoder').StringDecoder;
+
+max.addHandler('activeStatus', (ip, serialNumba) =>{
+
+  // // ip = faceTrackers[serialNumba].ip
+  // // var decoder = new StringDecoder('utf8');
+
+  // var conn = new ssh();
+  // conn.on('ready', function() {
+  //   //max.post('Client :: ready');
+  //   conn.shell(function(err, stream) {
+  //     if (err) throw err;
+  //     stream.on('close', function() {
+  //       //max.post('Stream :: close');
+  //       conn.end();
+  //     }).on('data', function(data) {
+  //       // let tracker_pyStatus;
+  //       // max.post(data, type(data));
+  //       data = data.toString('utf8')
+  //       if(data === 'inactive' || data === 'active'){
+  //         max.post(data)
+  //         faceTrackers[serialNumba].trackerService = data
+  //       }
+
+  //     });
+  //     stream.end("sudo systemctl is-active tracker.service\n");
+  //     // | cut -d'=' -f2
+  //   });
+  // }).connect({
+  //   host: ip,
+  //   // port: 22,
+  //   username: 'pi',
+  //   password: 'raspberry'
+  // });
+  // updateStability();
+})
+
+
+function checkTrackerService(){
+
+  Object.keys(faceTrackers).forEach(function(key) {
+    // var val = o[key];
+    // logic();
+    ip = faceTrackers[key].ip
+    //max.post(key)
+    // max.post(ip)
+    var conn = new ssh();
+    conn.on('ready', function() {
+      //max.post('Client :: ready');
+      conn.shell(function(err, stream) {
+        if (err) throw err;
+        stream.on('close', function() {
+          //max.post('Stream :: close');
+          conn.end();
+        }).on('data', function(data) {
+          // let tracker_pyStatus;
+          // max.post(data, type(data));
+          data = data.toString('utf8')
+          // max.post(data)
+          if(data.includes('inactive') || data.includes('active')){
+            //max.post(data)
+            faceTrackers[key].trackerService = data
+          }
+  
+        });
+        stream.end("sudo systemctl is-active tracker.service\n");
+        // | cut -d'=' -f2
+      });
+    }).connect({
+      host: ip,
+      // port: 22,
+      username: 'pi',
+      password: 'raspberry'
+    });
+  });
+  updateStability();
+
+}
