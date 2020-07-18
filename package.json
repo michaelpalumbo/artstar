@@ -31,7 +31,7 @@
     "http": "0.0.0",
     "imgconversion": "^1.0.7",
     "jimp": "^0.8.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "node-cron": "^2.0.3",
     "node-lp": "^1.0.1",
     "node-osc": "^4.1.1",
