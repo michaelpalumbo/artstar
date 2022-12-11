@@ -24,7 +24,7 @@
     "cp-file": "^7.0.0",
     "date-time": "^3.1.0",
     "ensure-dir": "^0.1.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fs": "0.0.1-security",
     "fs-copy": "^1.0.0",
     "fs-extra": "^8.1.0",
